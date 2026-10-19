@@ -1,0 +1,58 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: uts_pl_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: uts_buku
+      MYSQL_USER: user_buku
+      MYSQL_PASSWORD: password123
+      MYSQL_ROOT_PASSWORD: rootpassword123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - uts-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: uts_pl_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: "Buku API"
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: "base64:u/X6v/3Gk5J8W2y23N1Q3P94X9v/3Gk5J8W2y23N1Q3="
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: uts_buku
+      DB_USERNAME: user_buku
+      DB_PASSWORD: password123
+    depends_on:
+      - db
+    networks:
+      - uts-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: uts_pl_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - uts-network
+
+networks:
+  uts-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
