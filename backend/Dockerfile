@@ -1,4 +1,4 @@
-FROM php:8.3-cli-alpine AS builder
+FROM php:8.4-cli-alpine AS builder
 
 RUN apk add --no-cache git unzip zip libzip-dev \
     && docker-php-ext-install zip pdo_mysql
@@ -16,7 +16,7 @@ COPY . .
 RUN composer dump-autoload --optimize
 RUN cp .env.example .env && php artisan key:generate
 
-FROM php:8.3-cli-alpine
+FROM php:8.4-cli-alpine
 
 RUN apk add --no-cache libzip-dev \
     && docker-php-ext-install zip pdo_mysql
