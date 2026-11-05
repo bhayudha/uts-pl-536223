@@ -12,6 +12,11 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - uts-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   backend:
     build:
@@ -26,6 +31,8 @@ services:
       APP_ENV: production
       APP_DEBUG: "false"
       APP_KEY: "base64:u/X6v/3Gk5J8W2y23N1Q3P94X9v/3Gk5J8W2y23N1Q3="
+      LOG_CHANNEL: stdout
+      LOG_LEVEL: debug
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
@@ -36,6 +43,11 @@ services:
       - db
     networks:
       - uts-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   frontend:
     build:
