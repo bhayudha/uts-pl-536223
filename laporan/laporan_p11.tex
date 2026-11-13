@@ -1,130 +1,168 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[a4paper,oneside,11pt]{book}
 
-\usepackage[utf8]{inputenc}
-\usepackage[indonesian]{babel}
-\usepackage{geometry}
-\geometry{
-    top=2.5cm,
-    bottom=2.5cm,
-    left=3cm,
-    right=2.5cm
+% Package dasar
+\usepackage[utf8]{inputenc}     % Karakter UTF-8
+\usepackage[T1]{fontenc}        % Encoding font
+\usepackage{graphicx}           % Manajemen gambar
+\usepackage{titling}            % Kustomisasi halaman judul
+\usepackage[indonesian]{babel}  % Tata bahasa Indonesia
+\usepackage{titlesec}           % Kustomisasi judul bab dan subbab
+
+% Package matematika dan tabel akademik
+\usepackage{amsmath}            % Lingkungan matematika tingkat lanjut
+\usepackage{amssymb}            % Simbol matematika
+\usepackage{booktabs}           % Garis tabel akademik (\toprule, \midrule, \bottomrule)
+\usepackage{tabularx}           % Tabel dengan lebar dinamis
+\usepackage{array}              % Format sel tabel
+
+% Package tata letak dan tipografi
+\usepackage{geometry}           % Margin kertas
+\usepackage{setspace}           % Spasi baris
+\usepackage{fancyhdr}           % Header dan footer
+\usepackage{listings}           % Penulisan kode sumber
+\usepackage{xcolor}             % Pewarnaan teks dan kotak
+\usepackage{float}              % Manajemen posisi float
+\usepackage{tocloft}            % Kustomisasi daftar isi, gambar, dan tabel
+\usepackage{indentfirst}        % Indentasi pada paragraf pertama
+\usepackage{xurl}               % Pemutusan URL otomatis
+\usepackage{microtype}          % Optimasi tipografi dan perataan teks
+\usepackage{hyperref}           % Hyperlink dan bookmark PDF
+\usepackage{lmodern}
+
+% Pengaturan margin dokumen
+\geometry{left=3cm, right=2cm, top=2cm, bottom=2cm, headheight=14pt}
+\onehalfspacing                 % Spasi 1.5 baris
+
+% Format penomoran dan tampilan Bab
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter.}{1em}{}
+
+% Kustomisasi lingkungan penulisan kode
+\definecolor{codegray}{rgb}{0.96,0.96,0.96}
+\definecolor{codeborder}{rgb}{0.85,0.85,0.85}
+\definecolor{codeblue}{rgb}{0.1,0.2,0.7}
+\definecolor{codegreen}{rgb}{0.1,0.5,0.2}
+\definecolor{codered}{rgb}{0.7,0.1,0.1}
+
+\lstset{
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{codeblue}\bfseries,
+    commentstyle=\color{codegreen}\itshape,
+    stringstyle=\color{codered},
+    backgroundcolor=\color{codegray},
+    rulecolor=\color{codeborder},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=6pt,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    columns=flexible,
+    tabsize=2,
+    xleftmargin=0.8cm,
+    xrightmargin=0.3cm
 }
 
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{listings}
-\usepackage{caption}
-\usepackage{titlesec}
-\usepackage{fancyhdr}
-
+% Pengaturan hyperref
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    filecolor=black,      
+    filecolor=magenta,
     urlcolor=blue,
-    citecolor=black
+    citecolor=blue
 }
 
-\titleformat{\chapter}[display]
-  {\normalfont\bfseries\Large}
-  {\filleft\MakeUppercase{Bab} \thechapter}
-  {1ex}
-  {\titlerule\vspace{1ex}\filcenter\LARGE}
-  [\vspace{1ex}\titlerule]
-
-\titlespacing*{\chapter}{0pt}{-20pt}{25pt}
-
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\textit{Praktikum KEPL P11: Sistem Pemantauan \& Observabilitas}}
-\fancyhead[R]{\small\textit{536223 -- Pralambang B. Y.}}
-\fancyfoot[C]{\thepage}
-
-\lstset{
-    basicstyle=\ttfamily\footnotesize,
-    breaklines=true,
-    frame=single,
-    backgroundcolor=\color{gray!10},
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{gray}\textit,
-    stringstyle=\color{red},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    numbersep=5pt,
-    showstringspaces=false
-}
+% Informasi dokumen
+\title{LAPORAN PRAKTIKUM \\ KONSTRUKSI DAN EVOLUSI PERANGKAT LUNAK \\ PERTEMUAN XI \\ SISTEM PEMANTAUAN DAN OBSERVABILITAS: PROMETHEUS, GRAFANA, CADVISOR, NODE-EXPORTER, DAN ALERTING}
+\author{Nama Mahasiswa: Pralambang Bhayangkara Yhudanto\\NIM: 24/536223/SV/24414}
 
 \begin{document}
+\pagenumbering{gobble}
 
-% ==================== HALAMAN SAMPUL ====================
-\begin{titlepage}
-    \centering
-    \vspace*{1cm}
-    
-    {\Large\bfseries LAPORAN PRAKTIKUM}\\[0.3cm]
-    {\large\bfseries KONSTRUKSI DAN EVOLUSI PERANGKAT LUNAK}\\[1cm]
-    
-    \rule{\linewidth}{1.5pt}\\[0.4cm]
-    {\bfseries\Large SISTEM PEMANTAUAN DAN OBSERVABILITAS:}\\[0.2cm]
-    {\large\bfseries PROMETHEUS, GRAFANA, CADVISOR, NODE-EXPORTER, DAN ATURAN ALARM}\\[0.2cm]
-    \rule{\linewidth}{1.5pt}\\[2cm]
-    
-    \begin{minipage}{0.85\textwidth}
-        \centering
-        \textbf{Disusun oleh:}\\[0.2cm]
-        \textbf{\large Pralambang Bhayangkara Yhudanto}\\[0.1cm]
-        \textbf{NIM: 24/536223/SV/24414}\\[0.1cm]
-        \textbf{Kelas: AA}\\[0.4cm]
-        \textbf{Tautan Repositori GitHub Publik:}\\
-        \href{https://github.com/bhayudha/uts-pl-536223}{\texttt{https://github.com/bhayudha/uts-pl-536223}}\\[0.8cm]
-        \textbf{Dosen Pengampu:}\\
-        \textbf{Galih Malela Damaraji, S.Kom., M.Cs.}
-    \end{minipage}
-    
-    \vfill
-    
-    {\bfseries\large PROGRAM STUDI D-IV TEKNOLOGI REKAYASA PERANGKAT LUNAK}\\[0.2cm]
-    {\bfseries DEPARTEMEN TEKNIK ELEKTRO DAN INFORMATIKA}\\[0.2cm]
-    {\bfseries SEKOLAH VOKASI}\\[0.2cm]
-    {\bfseries UNIVERSITAS GADJAH MADA}\\[0.2cm]
-    {\bfseries YOGYAKARTA}\\[0.2cm]
-    {\bfseries 2026}
-    
-\end{titlepage}
+% =========================================================================
+% HALAMAN JUDUL (TITLE PAGE)
+% =========================================================================
+\begin{titlingpage} 
+\begin{center}
 
-% ==================== DAFTAR ISI & GAMBAR ====================
+\vspace{1.2cm} 
+\begin{Large} 
+\textbf{\thetitle} \\
+\end{Large}
+\vspace{1.0cm}
+
+\includegraphics[height=6.5cm]{lambang ugm.png}\\ 
+\begin{large}
+\vspace{1.0cm} 
+Disusun oleh:\\
+\textbf{Pralambang Bhayangkara Yhudanto}\\
+NIM: 24/536223/SV/24414
+\\
+Kelas: AA \\ 
+\end{large}
+\vspace{0.8cm}
+\begin{large}
+Dosen Pengampu:\\
+\textbf{Galih Malela Damaraji, S.Kom., M.Cs.}\\
+\end{large}
+
+\vspace{1.2cm}
+\begin{Large}
+\textbf{PROGRAM STUDI D-IV TEKNOLOGI REKAYASA PERANGKAT LUNAK}\\
+\textbf{DEPARTEMEN TEKNIK ELEKTRO DAN INFORMATIKA}\\
+\textbf{SEKOLAH VOKASI}\\
+\textbf{UNIVERSITAS GADJAH MADA}\\
+\textbf{YOGYAKARTA}\\
+\textbf{2026}\\
+\end{Large}
+
+\end{center}
+\end{titlingpage}
+
+% =========================================================================
+% BAGIAN DEPAN (FRONT MATTER)
+% =========================================================================
+\frontmatter
 \pagenumbering{roman}
-\tableofcontents
-\newpage
-\listoffigures
-\newpage
-\listoftables
-\newpage
 
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Daftar Gambar}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Daftar Tabel}
+\listoftables
+\clearpage
+
+% =========================================================================
+% BAGIAN UTAMA (MAIN MATTER)
+% =========================================================================
+\mainmatter
 \pagenumbering{arabic}
 
-% ==================== BAB 1 ====================
+% =========================================================================
+% BAB 1: KONFIGURASI DAN ORKESTRASI LAYANAN PEMANTAU
+% =========================================================================
 \chapter{Konfigurasi dan Orkestrasi Layanan Pemantau}
 
 \section{Arsitektur Empat Layanan Pemantau Terkontainerisasi}
-Dalam ekosistem aplikasi modern yang terdistribusi dan berbasis kontainer, observabilitas metrik performa menjadi instrumen vital untuk menjamin keandalan sistem (*system reliability*). Berbeda dengan *logging* terstruktur pada P10 yang menangkap kejadian diskrit, pemantauan metrik menyediakan data numerik berbasis deret waktu (*time-series*) yang memungkinkan tim perekayasa mendeteksi degradasi performa sebelum menjadi insiden pemadaman.
+Dalam ekosistem aplikasi modern yang terdistribusi dan berbasis kontainer, observabilitas metrik performa menjadi instrumen vital untuk menjamin keandalan sistem (\textit{system reliability}). Berbeda dengan pencatatan log terstruktur pada P10 yang merekam kejadian diskrit, pemantauan metrik menyediakan data numerik berbasis deret waktu (\textit{time-series}) yang memungkinkan perekayasa mendeteksi degradasi performa sebelum berkembang menjadi insiden pemadaman.
 
-Pada tugas Praktikum 11 ini, empat layanan pemantau dijalankan berdampingan dengan tiga layanan aplikasi eksisting (\texttt{uts\_pl\_db}, \texttt{uts\_pl\_backend}, dan \texttt{uts\_pl\_frontend}) melalui satu berkas \texttt{docker-compose.yml} pada jaringan \texttt{uts-network}:
+Pada tugas Praktikum 11 ini, empat layanan pemantau diorkestrasi berdampingan dengan tiga layanan aplikasi eksisting (\texttt{uts\_pl\_db}, \texttt{uts\_pl\_backend}, dan \texttt{uts\_pl\_frontend}) melalui satu berkas \texttt{docker-compose.yml} pada jaringan bersama \texttt{uts-network}:
 \begin{enumerate}
-    \item \textbf{Prometheus (\texttt{prom/prometheus:v2.51.0}):} Berfungsi sebagai *metrics aggregator* dan *time-series database* (TSDB). Prometheus secara proaktif menarik metrik numerik (*pull-based scraping*) dari target setiap 15 detik, memproses aturan alarm, dan menyimpan data secara lokal.
+    \item \textbf{Prometheus (\texttt{prom/prometheus:v2.51.0}):} Berfungsi sebagai agregator metrik dan basis data time-series (TSDB). Prometheus secara proaktif menarik metrik numerik (\textit{pull-based scraping}) dari target setiap 15 detik, mengevaluasi aturan alarm, dan menyimpan data secara lokal.
     \item \textbf{Grafana (\texttt{grafana/grafana:10.4.1}):} Berfungsi sebagai antarmuka visualisasi observabilitas terpusat yang menerjemahkan data mentah TSDB Prometheus menjadi dashboard analitik interaktif multi-panel.
-    \item \textbf{cAdvisor (\texttt{gcr.io/cadvisor/cadvisor:v0.49.1}):} Agen pengumpul metrik tingkat kontainer (*container-level metrics*) yang membaca langsung *cgroups* dan soket Docker daemon untuk mengukur utilisasi CPU, konsumsi RAM, serta laju transfer I/O jaringan per kontainer.
-    \item \textbf{Node Exporter (\texttt{prom/node-exporter:v1.7.0}):} Agen pengumpul metrik tingkat mesin *host* (*hardware and OS-level metrics*) yang memantau utilisasi CPU kernel, kapasitas disk penyimpanan, dan konsumsi memori fisik.
+    \item \textbf{cAdvisor (\texttt{gcr.io/cadvisor/cadvisor:v0.49.1}):} Agen pengumpul metrik tingkat kontainer (\textit{container-level metrics}) yang membaca langsung \textit{cgroups} dan soket Docker daemon untuk mengukur utilisasi CPU, konsumsi RAM, serta laju transfer I/O jaringan per kontainer.
+    \item \textbf{Node Exporter (\texttt{prom/node-exporter:v1.7.0}):} Agen pengumpul metrik tingkat mesin \textit{host} (\textit{hardware and OS-level metrics}) yang memantau utilisasi CPU kernel, kapasitas disk penyimpanan, dan konsumsi memori fisik mesin induk.
 \end{enumerate}
 
 \section{Penerapan Pinned Version dan Persistensi Volume Data}
-Sesuai dengan kriteria penilaian, seluruh *image* Docker pada layanan pemantau dikunci versinya secara eksplisit (*pinned version*) dan dilarang menggunakan tag \texttt{:latest}. Praktik ini menjamin sifat *idempotent* dan *reproducible build*, sehingga pembaruan pustaka di masa mendatang tidak merusak stabilitas lingkungan operasional.
+Sesuai dengan kriteria penilaian, seluruh \textit{image} Docker pada layanan pemantau dikunci versinya secara eksplisit (\textit{pinned version}) dan dilarang keras menggunakan tag \texttt{:latest}. Praktik ini menjamin sifat \textit{idempotent} dan \textit{reproducible build}, sehingga pembaruan pustaka pihak ketiga di masa mendatang tidak merusak stabilitas lingkungan operasional.
 
-Selain itu, volume data persisten (*named volumes*) dideklarasikan untuk Prometheus (\texttt{prometheus\_data}) dan Grafana (\texttt{grafana\_data}). Konfigurasi ini menjamin riwayat metrik time-series dan pengaturan dashboard pengguna tidak hilang saat kontainer dimatikan, di-restart, atau di-deploy ulang.
+Selain itu, volume data persisten (\textit{named volumes}) dideklarasikan untuk Prometheus (\texttt{prometheus\_data}) dan Grafana (\texttt{grafana\_data}). Konfigurasi ini menjamin riwayat metrik time-series dan pengaturan dashboard pengguna tidak hilang saat kontainer dihentikan, di-restart, atau di-deploy ulang.
 
 \section{Bukti Visual Screenshot Layanan Aktif dan Konfigurasi Compose}
 Seluruh layanan berhasil diorkestrasi dan berjalan aktif secara harmonis dalam lingkungan Docker Compose.
@@ -140,28 +178,28 @@ Sebagaimana dibuktikan pada Gambar \ref{fig:compose_ps}, ketujuh kontainer berad
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/compose_prometheus.png}
+    \includegraphics[width=0.88\textwidth]{images/compose_prometheus.png}
     \caption{Konfigurasi Layanan Prometheus dengan Pinned Version \texttt{v2.51.0} dan Volume Data}
     \label{fig:compose_prom}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/compose_grafana.png}
+    \includegraphics[width=0.88\textwidth]{images/compose_grafana.png}
     \caption{Konfigurasi Layanan Grafana dengan Pinned Version \texttt{10.4.1} dan Volume Data}
     \label{fig:compose_graf}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/compose_cadvisor.png}
+    \includegraphics[width=0.88\textwidth]{images/compose_cadvisor.png}
     \caption{Konfigurasi Layanan cAdvisor dengan Pinned Version \texttt{v0.49.1} dan Volume Host}
     \label{fig:compose_cad}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/compose_node_exporter.png}
+    \includegraphics[width=0.88\textwidth]{images/compose_node_exporter.png}
     \caption{Konfigurasi Layanan Node Exporter dengan Pinned Version \texttt{v1.7.0}}
     \label{fig:compose_node}
 \end{figure}
@@ -176,15 +214,17 @@ Konfigurasi scraping pada berkas \texttt{monitoring/prometheus/prometheus.yml} m
     \label{fig:prom_targets}
 \end{figure}
 
-Gambar \ref{fig:prom_targets} membuktikan secara valid bahwa ketiga target berhasil terhubung dengan status hijau \textbf{UP (1/1)}, tanpa adanya kesalahan penarikan (*zero errors*) dengan durasi scrape yang efisien di bawah 60 milidetik. Hal ini membuktikan kriteria penilaian susunan layanan berjalan dan target UP terpenuhi secara paripurna (25/25 Poin).
+Gambar \ref{fig:prom_targets} membuktikan secara valid bahwa ketiga target berhasil terhubung dengan status hijau \textbf{UP (1/1)}, tanpa adanya kesalahan penarikan (\textit{zero errors}) dengan durasi scrape yang efisien di bawah 60 milidetik. Hal ini membuktikan kriteria penilaian susunan layanan berjalan dan seluruh target UP terpenuhi secara paripurna (25/25 Poin).
 
-% ==================== BAB 2 ====================
+% =========================================================================
+% BAB 2: DESAIN DASHBOARD GRAFANA MENJAWAB PERTANYAAN
+% =========================================================================
 \chapter{Desain Dashboard Grafana Menjawab Pertanyaan Operasional}
 
 \section{Filosofi Dashboard Berorientasi Pertanyaan}
-Berdasarkan instruksi dan rubrik penilaian dosen, dashboard yang diunduh secara mentah dari galeri publik Grafana dinilai tidak memadai (*Kurang*). Panel pemantau wajib disusun secara mandiri dan disesuaikan dengan arsitektur sistem. Judul setiap panel **wajib ditulis sebagai kalimat PERTANYAAN** operasional, bukan sekadar menampilkan nama teknis metrik PromQL, serta wajib dilengkapi satuan yang presisi pada sumbu visualisasinya.
+Berdasarkan instruksi dan rubrik penilaian dosen, dashboard yang diunduh secara mentah dari galeri publik Grafana dinilai tidak memadai (\textit{Kurang}). Panel pemantau wajib disusun secara mandiri dan disesuaikan dengan arsitektur sistem aplikasi. Judul setiap panel **wajib ditulis sebagai kalimat PERTANYAAN** operasional, bukan sekadar menampilkan nama teknis metrik PromQL, serta wajib dilengkapi satuan yang presisi pada sumbu visualisasinya.
 
-Pendekatan ini berpegang pada prinsip *Observability Driven Development*, di mana dashboard pemantau dirancang untuk menjawab pertanyaan kritis seorang *Site Reliability Engineer* (SRE) ketika melakukan inspeksi kesehatan aplikasi di lingkungan produksi.
+Pendekatan ini berpegang pada prinsip \textit{Observability Driven Development}, di mana dashboard pemantau dirancang untuk menjawab pertanyaan kritis seorang \textit{Site Reliability Engineer} (SRE) ketika melakukan inspeksi kesehatan aplikasi di lingkungan produksi.
 
 \section{Rincian Empat Panel Pemantau Utama}
 Tabel \ref{tab:panels} merangkum spesifikasi teknis dari keempat panel yang telah diimplementasikan:
@@ -194,17 +234,17 @@ Tabel \ref{tab:panels} merangkum spesifikasi teknis dari keempat panel yang tela
 \small
 \caption{Spesifikasi 4 Panel Dashboard Grafana Berorientasi Pertanyaan}
 \label{tab:panels}
-\begin{tabularx}{\textwidth}{p{0.5cm}Xp{4.2cm}p{1.8cm}p{2.5cm}}
+\begin{tabularx}{\textwidth}{c >{\raggedright\arraybackslash}p{4cm} >{\raggedright\arraybackslash\ttfamily\scriptsize}X c >{\raggedright\arraybackslash}p{2.8cm}}
 \toprule
 \textbf{No} & \textbf{Judul Panel (Pertanyaan)} & \textbf{Query PromQL} & \textbf{Tipe Panel} & \textbf{Satuan Sumbu} \\
 \midrule
-1 & Berapa persentase penggunaan CPU per container saat ini? & \texttt{sum(rate(container\_cpu\_usage\_seconds\_total[5m])) by (id) * 100} & Time Series & Percent (0--100\%) \\
+1 & Berapa persentase penggunaan CPU per container saat ini? & sum(rate(container\_cpu\_usage\_seconds\_total[5m])) by (id) * 100 & Time Series & Percent (0--100\%) \\
 \addlinespace
-2 & Berapa konsumsi memori RAM yang digunakan oleh masing-masing container? & \texttt{container\_memory\_usage\_bytes\{id=\textasciitilde"/docker/.*"\}} & Time Series & Data bytes (IEC: MiB / GiB) \\
+2 & Berapa konsumsi memori RAM yang digunakan oleh masing-masing container? & container\_memory\_usage\_bytes\{id=\textasciitilde"/docker/.*"\} & Time Series & Data bytes (IEC: MiB / GiB) \\
 \addlinespace
-3 & Berapa rata-rata jumlah permintaan HTTP yang diproses per detik? & \texttt{sum(rate(prometheus\_http\_requests\_total[1m])) by (handler)} & Time Series & Requests/sec (\texttt{reqps}) \\
+3 & Berapa rata-rata jumlah permintaan HTTP yang diproses per detik? & sum(rate(prometheus\_http\_requests\_total[1m])) by (handler) & Time Series & Requests/sec (\texttt{reqps}) \\
 \addlinespace
-4 & Apakah seluruh layanan dan container utama berada dalam kondisi hidup (UP)? & \texttt{up} & Stat Panel & Mappings: 1=UP (Hijau), 0=DOWN (Merah) \\
+4 & Apakah seluruh layanan dan container utama berada dalam kondisi hidup (UP)? & up & Stat Panel & Mappings: 1=UP (Hijau), 0=DOWN (Merah) \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -221,22 +261,24 @@ Dashboard mandiri dengan pengenal \texttt{uts-monitoring-dashboard} telah terint
 
 Sebagaimana disajikan pada Gambar \ref{fig:grafana_dashboard}:
 \begin{itemize}
-    \item **Panel CPU (Kiri Atas):** Menjawab pertanyaan beban kerja komputasi real-time dari setiap kontainer dengan sumbu Y berlabel jelas \texttt{Penggunaan CPU (\%)} pada rentang skala 0\% hingga 1.5\%.
-    \item **Panel Memori (Kanan Atas):** Menjawab alokasi RAM per kontainer dengan sumbu Y berlabel \texttt{Kapasitas RAM Terpakai} berskala data IEC (\texttt{0 B}, \texttt{256 MiB}, \texttt{512 MiB}), membuktikan kontainer terbesar mengonsumsi sekitar 512 MiB memori.
-    \item **Panel Permintaan per Detik (Kiri Bawah):** Menjawab intensitas lalu lintas request per detik dengan sumbu Y berlabel \texttt{Permintaan per Detik (req/s)} dengan fluktuasi riil saat request diterima.
-    \item **Panel Status Hidup (Kanan Bawah):** Menampilkan tiga kartu status berwarna hijau bertuliskan \textbf{UP (Sehat)} untuk \texttt{node-exporter}, \texttt{prometheus}, dan \texttt{cadvisor}.
+    \item \textbf{Panel CPU (Kiri Atas):} Menjawab pertanyaan beban kerja komputasi real-time dari setiap kontainer dengan sumbu Y berlabel jelas \texttt{Penggunaan CPU (\%)} pada rentang skala 0\% hingga 1.5\%.
+    \item \textbf{Panel Memori (Kanan Atas):} Menjawab alokasi RAM per kontainer dengan sumbu Y berlabel \texttt{Kapasitas RAM Terpakai} berskala data IEC (\texttt{0 B}, \texttt{256 MiB}, \texttt{512 MiB}), membuktikan kontainer terbesar mengonsumsi sekitar 512 MiB memori.
+    \item \textbf{Panel Permintaan per Detik (Kiri Bawah):} Menjawab intensitas lalu lintas request per detik dengan sumbu Y berlabel \texttt{Permintaan per Detik (req/s)} dengan fluktuasi riil saat request diterima.
+    \item \textbf{Panel Status Hidup (Kanan Bawah):} Menampilkan tiga kartu status berwarna hijau bertuliskan \textbf{UP (Sehat)} untuk \texttt{node-exporter}, \texttt{prometheus}, dan \texttt{cadvisor}.
 \end{itemize}
 
 \section{Ekspor Berkas JSON Dashboard pada Repositori}
 Seluruh model konfigurasi visualisasi di atas telah diekspor dan disimpan ke dalam repositori pada jalur \texttt{monitoring/grafana/dashboards/uts\_monitoring\_dashboard.json} dan ter-commit secara resmi, memenuhi kriteria 30 poin dashboard yang menjawab pertanyaan.
 
-% ==================== BAB 3 ====================
+% =========================================================================
+% BAB 3: ATURAN ALARM DAN UJI SIMULASI INSIDEN
+% =========================================================================
 \chapter{Aturan Alarm dan Uji Simulasi Insiden (Status FIRING)}
 
 \section{Spesifikasi Aturan Alarm pada \texttt{alerts.yml}}
 Sistem pemantauan yang pasif hanya menampilkan grafik tanpa kemampuan notifikasi otomatis akan menuntut pengawasan manusia selama 24/7. Oleh karena itu, Prometheus Alerting dikonfigurasikan melalui berkas \texttt{monitoring/prometheus/alerts.yml} untuk mendeteksi anomali kegagalan layanan secara proaktif.
 
-Sesuai instruksi tugas, aturan alarm wajib menyertakan parameter \texttt{for:} untuk menyaring anomali sementara (*transient spikes*) dan anotasi yang mencantumkan tindakan pertama (*first responder action*) bagi teknisi yang menerima peringatan tersebut.
+Sesuai instruksi tugas, aturan alarm wajib menyertakan parameter \texttt{for:} untuk menyaring anomali sementara (\textit{transient spikes}) dan anotasi yang mencantumkan tindakan pertama (\textit{first responder action}) bagi teknisi yang menerima peringatan tersebut.
 
 \begin{lstlisting}[language=XML,caption={Berkas Konfigurasi Aturan Alarm \texttt{alerts.yml}}]
 groups:
@@ -261,7 +303,7 @@ groups:
 \end{figure}
 
 \section{Metodologi Uji Simulasi Gangguan (Chaos/Outage Test)}
-Untuk membuktikan bahwa aturan alarm bekerja dan berbunyi, dilakukan uji simulasi pemadaman (*chaos testing*) dengan langkah-langkah berikut:
+Untuk membuktikan bahwa aturan alarm bekerja dan berbunyi, dilakukan uji simulasi pemadaman (\textit{chaos testing}) dengan langkah-langkah berikut:
 \begin{enumerate}
     \item Kondisi Awal: Seluruh target aktif dan aturan \texttt{ServiceDown} berada pada status hijau \textbf{INACTIVE}.
     \item Pemadaman Terkendali: Layanan \texttt{node-exporter} dimatikan secara sengaja menggunakan perintah terminal:
@@ -281,20 +323,22 @@ docker compose stop node-exporter
 
 Gambar \ref{fig:alerts_firing} membuktikan alarm \texttt{ServiceDown} berada dalam keadaan \textbf{FIRING (1)} pada instans \texttt{node-exporter:9100}. Seluruh detail label dan anotasi tindakan pertama tertampil dengan jelas. Setelah pembuktian selesai, kontainer dihidupkan kembali (\texttt{docker compose start node-exporter}) dan alarm kembali pulih ke status \textbf{INACTIVE}, mengamankan 25 poin penilaian alarm terbukti berbunyi.
 
-% ==================== BAB 4 ====================
+% =========================================================================
+% BAB 4: PENERAPAN KEAMANAN DASAR PADA GRAFANA
+% =========================================================================
 \chapter{Penerapan Keamanan Dasar pada Grafana}
 
 \section{Signifikansi Penggantian Kredensial Administrator Bawaan}
-Sistem observabilitas dan telemetri merupakan sasaran bernilai tinggi (*high-value target*) bagi peretas. Grafana secara bawaan dikonfigurasi dengan kredensial administrator default berupa \texttt{admin:admin}.
+Sistem observabilitas dan telemetri merupakan sasaran bernilai tinggi (\textit{high-value target}) bagi peretas. Grafana secara bawaan dikonfigurasi dengan kredensial administrator default berupa \texttt{admin:admin}.
 
 Dalam penilaian praktikum, dosen pengampu menetapkan aturan tegas:
 \begin{quote}
 \textit{“Password Grafana yang dibiarkan admin/admin membatalkan nilai kriteria keamanan dasar (0/10 poin).”}
 \end{quote}
 
-Penggantian password bawaan bukan sekadar formalitas akademik, melainkan prinsip keamanan dasar (*defense-in-depth*) yang krusial karena alasan teknis berikut:
+Penggantian password bawaan bukan sekadar formalitas akademik, melainkan prinsip keamanan dasar (\textit{defense-in-depth}) yang krusial karena alasan teknis berikut:
 \begin{enumerate}
-    \item \textbf{Mitigasi Serangan Automated Brute-Force dan Credential Stuffing:} Bot dan *malicious scanners* di jaringan publik terus-menerus memindai port umum (seperti port 3000) untuk mencoba pasangan kredensial bawaan. Membiarkan password default memungkinkan pengambilalihan sistem dalam hitungan detik.
+    \item \textbf{Mitigasi Serangan Automated Brute-Force dan Credential Stuffing:} Bot dan \textit{malicious scanners} di jaringan publik terus-menerus memindai port umum (seperti port 3000) untuk mencoba pasangan kredensial bawaan. Membiarkan password default memungkinkan pengambilalihan sistem dalam hitungan detik.
     \item \textbf{Pencegahan Reconnaissance dan Kebocoran Topologi Sistem:} Melalui akses administrator Grafana, penyerang dapat membaca query PromQL, struktur jaringan internal kontainer, pola beban lalu lintas data, serta letak kerentanan subsistem yang mempermudah serangan lanjutan.
     \item \textbf{Mencegah Sabotase Observabilitas dan Modifikasi Alerting:} Penyerang dapat menghapus dashboard pemantau atau menonaktifkan aturan alarm kritis, sehingga insiden operasional atau pencurian data tidak dapat terdeteksi oleh tim teknisi.
 \end{enumerate}
@@ -316,22 +360,24 @@ Pengujian autentikasi memvalidasi bahwa akses dengan kredensial lama (\texttt{ad
 
 Gambar \ref{fig:grafana_profile} menunjukkan akun administrator \texttt{admin} berhasil login dan membuka halaman profil pengguna di Grafana, membuktikan kriteria 10 poin keamanan dasar terpenuhi seutuhnya.
 
-% ==================== BAB 5 ====================
+% =========================================================================
+% BAB 5: INTEGRASI GIT, PULL REQUEST, DAN KESIMPULAN
+% =========================================================================
 \chapter{Integrasi Git, Pull Request, dan Kesimpulan}
 
 \section{Disiplin Git dan Branching Hygiene}
-Seluruh alur pekerjaan Praktikum 11 dieksekusi dengan standar rekayasa perangkat lunak yang ketat melalui *branching hygiene* pada branch terisolasi \texttt{feature/p11-monitoring-alerting}.
+Seluruh alur pekerjaan Praktikum 11 dieksekusi dengan standar rekayasa perangkat lunak yang ketat melalui \textit{branching hygiene} pada branch terisolasi \texttt{feature/p11-monitoring-alerting}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/git_branch.png}
+    \includegraphics[width=0.75\textwidth]{images/git_branch.png}
     \caption{Bukti Terminal Berada pada Branch \texttt{feature/p11-monitoring-alerting}}
     \label{fig:git_branch}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/git_log.png}
+    \includegraphics[width=0.9\textwidth]{images/git_log.png}
     \caption{Bukti Riwayat Komit Atomik Menggunakan Format Conventional Commits}
     \label{fig:git_log}
 \end{figure}
