@@ -1,0 +1,12 @@
+groups:
+  - name: uts_service_alerts
+    rules:
+      - alert: ServiceDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Layanan {{ $labels.job }} ({{ $labels.instance }}) tidak merespons"
+          description: "Target {{ $labels.instance }} pada job {{ $labels.job }} terdeteksi mati (UP=0) selama lebih dari 30 detik."
+          first_action: "Segera lakukan investigasi container dengan 'docker compose ps' dan periksa error log melalui 'docker compose logs {{ $labels.job }} --tail 50' untuk segera merestart layanan bila terjadi kegagalan!"
